@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woninet | Local Network Monitoring</title>
+    <meta name="description" content="Woninet is a local network monitoring system that detects network hosts, tracks their availability, and measures latency, packet loss, and jitter, with configurable real-time alert rules.">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav__container">
+            <a href="#" class="nav__logo">Woninet</a>
+            <ul class="nav__links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#metrics">Metrics</a></li>
+                <li><a href="#install">Install</a></li>
+                <li><a href="#configuration">Configuration</a></li>
+                <li><a href="#platforms">Platforms</a></li>
+                <li><a href="#docs">Docs</a></li>
+            </ul>
+            <div class="nav__actions">
+                <button class="btn btn--ghost" id="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon">&#9790;</span>
+                </button>
+                <a href="https://github.com/woninet/woninet" target="_blank" rel="noopener" class="btn btn--primary">GitHub</a>
+            </div>
+            <button class="nav__hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero__container">
+            <div class="hero__badge">Version: v2.2.0</div>
+            <h1 class="hero__title">Network Monitoring<br>Made Easy.</h1>
+            <p class="hero__subtitle">A local network monitoring system that detects network hosts,
+                tracks their availability, and measures latency, packet loss, and jitter. It continuously
+                collects metrics and evaluates configurable alert rules in real time.</p>
+            <div class="hero__cta">
+                <a href="#install" class="btn btn--primary btn--lg">Get Started</a>
+                <a href="#features" class="btn btn--outline btn--lg">See Features</a>
+            </div>
+            <div class="hero__stats">
+                <div class="hero__stat"><span>1</span> star</div>
+                <div class="hero__stat"><span>100+</span> Monthly PyPI Downloads</div>
+                <div class="hero__stat"><span>MIT</span> License</div>
+                <div class="hero__stat"><span>3.12+</span> Python</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="preview">
+        <div class="container">
+            <figure class="preview__figure fade-in">
+                <img src="https://raw.githubusercontent.com/woninet/woninet/refs/heads/dev/public/img/woninet-dasboard.png"
+                     alt="Woninet web dashboard showing monitored hosts and their metrics"
+                     loading="lazy">
+                <figcaption>The Woninet dashboard</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Built for your local network</h2>
+                <p>Accurate host detection, continuous metrics, and alerts you can tune, from a single Python package.</p>
+            </div>
+            <div class="features__grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-card__icon">&#128269;</div>
+                    <h3>ARP + ICMP Host Detection</h3>
+                    <p>Distinguishes real devices from nonexistent IP addresses and filters out Wi-Fi ARP-delay noise.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-card__icon">&#128276;</div>
+                    <h3>Alert Engine</h3>
+                    <p>Evaluates real-time alert rules, such as latency thresholds, against the metrics it collects.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-card__icon">&#9889;</div>
+                    <h3>Threaded Collectors</h3>
+                    <p>Sends ICMP probes concurrently using a configurable number of worker threads.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-card__icon">&#128451;</div>
+                    <h3>PostgreSQL &amp; SQLite</h3>
+                    <p>Persists devices, recorded metrics, alert states, and alert events in a custom SQL database.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-card__icon">&#128187;</div>
+                    <h3>Database Access from the CLI</h3>
+                    <p>Accepts a positional argument for easier access to the database straight from the command line.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-card__icon">&#128221;</div>
+                    <h3>Detailed Logging</h3>
+                    <p>Comprehensive logs make it straightforward to follow what Woninet is doing and diagnose issues.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="metrics" id="metrics">
+        <div class="container">
+            <div class="section-header">
+                <h2>Metrics and alert rules</h2>
+                <p>Three metrics are tracked for every host. Each can drive its own alert rule.</p>
+            </div>
+            <div class="table-wrap fade-in">
+                <table class="table">
+                    <thead>
+                        <tr><th>Metric</th><th>Unit</th><th>Alert threshold behavior</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>latency</code></td><td>milliseconds</td><td>Triggers when latency exceeds the threshold.</td></tr>
+                        <tr><td><code>jitter</code></td><td>milliseconds</td><td>Triggers when jitter exceeds the threshold.</td></tr>
+                        <tr><td><code>packet_loss</code></td><td>percent (0.0 to 100.0)</td><td>A threshold of <code>0.0</code> triggers on any packet loss.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="section-note">Each rule also sets <code>consecutive_checks</code>, the number of consecutive evaluations required before the alert state changes. Higher values reduce false positives.</p>
+        </div>
+    </section>
+
+    <section class="install" id="install">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get started in minutes</h2>
+                <p>Requires Python 3.12 or later and raw-socket access for ARP and ICMP probing.</p>
+            </div>
+            <div class="install__grid">
+                <div class="install-card fade-in">
+                    <h3>Linux (recommended)</h3>
+                    <p>Install from PyPI in a virtual environment and grant <code>cap_net_raw</code> to the interpreter, avoiding the need to run as root.</p>
+                    <div class="code-block">
+                        <button class="code-block__copy" type="button" aria-label="Copy code">Copy</button>
+<pre><code>python3 -m venv --copies venv
+source venv/bin/activate
+pip install woninet
+sudo setcap cap_net_raw=eip venv/bin/python3
+woninet --help</code></pre>
+                    </div>
+                    <p class="install-card__note">Without the capability, Woninet falls back to the system <code>ping</code> command. Create the environment without <code>--copies</code> in that case.</p>
+                </div>
+                <div class="install-card fade-in">
+                    <h3>Docker (Linux only)</h3>
+                    <p>Clone the repository and run the build script. It starts the stack and prints the device's private IP address.</p>
+                    <div class="code-block">
+                        <button class="code-block__copy" type="button" aria-label="Copy code">Copy</button>
+<pre><code>chmod +x build_docker.sh
+sudo ./build_docker.sh</code></pre>
+                    </div>
+                    <p class="install-card__note">Open the printed address in your browser using the default port <code>8080</code>.</p>
+                </div>
+                <div class="install-card fade-in">
+                    <h3>From source</h3>
+                    <p>Create the virtual environment outside the project directory to avoid flat-layout discovery errors.</p>
+                    <div class="code-block">
+                        <button class="code-block__copy" type="button" aria-label="Copy code">Copy</button>
+<pre><code>git clone https://github.com/woninet/woninet
+cd woninet
+python3 -m venv --copies ../venv
+source ../venv/bin/activate
+pip3 install .
+sudo setcap cap_net_raw=eip ../venv/bin/python3
+woninet --version</code></pre>
+                    </div>
+                    <p class="install-card__note">Running with <code>sudo</code> instead of granting the capability is possible but discouraged for security reasons.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="configuration" id="configuration">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple JSON configuration</h2>
+                <p>Alert rules and monitoring settings live in a single <code>config.json</code> loaded at startup.</p>
+            </div>
+            <div class="config__layout">
+                <div class="code-block fade-in">
+                    <button class="code-block__copy" type="button" aria-label="Copy code">Copy</button>
+<pre><code>{
+    "monitoring": {
+        "arp_noise_limit": 300.0,
+        "max_workers": 4
+    },
+    "database": {
+        "type": "sqlite",
+        "path": "woninet.db"
+    },
+    "target_ip_list": [
+        "192.168.1.1", "192.168.1.10", "192.168.1.20-30"
+    ],
+    "alert_rules": [
+        {
+            "metric": "latency",
+            "threshold": 100,
+            "consecutive_checks": 3
+        },
+        {
+            "metric": "packet_loss",
+            "threshold": 0.0,
+            "consecutive_checks": 1
+        },
+        {
+            "metric": "jitter",
+            "threshold": 40.0,
+            "consecutive_checks": 3
+        }
+    ]
+}</code></pre>
+                </div>
+                <div class="config__details fade-in">
+                    <h3>Settings at a glance</h3>
+                    <ul class="config__list">
+                        <li><code>arp_noise_limit</code>: latency threshold in milliseconds used to filter ARP resolution noise. Set to <code>0</code> to disable filtering.</li>
+                        <li><code>max_workers</code>: maximum number of worker threads used to send ICMP pings.</li>
+                        <li><code>database.type</code>: <code>sqlite</code> or <code>postgresql</code>.</li>
+                        <li><code>database.path</code>: a file path for SQLite, or a connection URL for PostgreSQL.</li>
+                        <li><code>target_ip_list</code>: a single address, a list of addresses, or a range such as <code>192.168.1.1-100</code>.</li>
+                        <li><code>alert_rules</code>: a list of rules, each with a <code>metric</code>, <code>threshold</code>, and <code>consecutive_checks</code>.</li>
+                    </ul>
+                    <div class="callout">
+                        <strong>Using PostgreSQL?</strong> Keep credentials out of <code>config.json</code>. Define <code>WONINET_DATABASE_URL</code> in a <code>.env</code> file in the project root; it overrides <code>database.path</code>.
+                    </div>
+                    <p class="config__hint">Use <code>--config</code> to load a different file. When installed from PyPI, Woninet creates a default <code>config.json</code> for you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="platforms" id="platforms">
+        <div class="container">
+            <div class="section-header">
+                <h2>Platform support</h2>
+                <p>Woninet is developed and tested on Linux.</p>
+            </div>
+            <div class="table-wrap fade-in">
+                <table class="table">
+                    <thead>
+                        <tr><th>Platform</th><th>Probing method</th><th>Privileges</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Linux</td><td><code>icmplib</code> (recommended) or system <code>ping</code> (fallback)</td><td><code>cap_net_raw</code> on the interpreter, or root</td></tr>
+                        <tr><td>macOS</td><td>Untested</td><td>Untested</td></tr>
+                        <tr><td>Windows</td><td>Untested</td><td>Untested</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="section-note">macOS and Windows have not been tested, so behavior there is not guaranteed. Feedback and bug reports are welcome. Docker deployment is available on Linux only. Monitoring is currently limited to a single /24 subnet.</p>
+        </div>
+    </section>
+
+    <section class="docs" id="docs">
+        <div class="container">
+            <div class="section-header">
+                <h2>Documentation and community</h2>
+                <p>Everything you need to run, extend, and contribute to Woninet.</p>
+            </div>
+            <div class="docs__grid">
+                <a class="doc-card fade-in" href="https://github.com/woninet/woninet/tree/dev/docs" target="_blank" rel="noopener">
+                    <h3>Documentation</h3>
+                    <p>Usage guide, common workflows, and troubleshooting.</p>
+                </a>
+                <a class="doc-card fade-in" href="https://pypi.org/project/woninet/" target="_blank" rel="noopener">
+                    <h3>PyPI Package</h3>
+                    <p>Install the latest release with <code>pip install woninet</code>.</p>
+                </a>
+                <a class="doc-card fade-in" href="https://github.com/woninet/woninet/blob/dev/CONTRIBUTING.md" target="_blank" rel="noopener">
+                    <h3>Contributing</h3>
+                    <p>Read the contributing guide before submitting changes.</p>
+                </a>
+                <a class="doc-card fade-in" href="https://github.com/woninet/woninet/issues" target="_blank" rel="noopener">
+                    <h3>Report an Issue</h3>
+                    <p>Found a bug or have a request? Open an issue on GitHub.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div>
+                    <div class="footer__logo">Woninet</div>
+                    <p>A local network monitoring system.</p>
+                </div>
+                <div>
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#install">Install</a>
+                    <a href="https://github.com/woninet/woninet/blob/dev/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <a href="https://github.com/woninet/woninet/tree/dev/docs" target="_blank" rel="noopener">Documentation</a>
+                    <a href="https://pypi.org/project/woninet/" target="_blank" rel="noopener">PyPI</a>
+                    <a href="https://github.com/woninet/woninet" target="_blank" rel="noopener">GitHub</a>
+                </div>
+                <div>
+                    <h4>Project</h4>
+                    <a href="https://github.com/woninet/woninet/blob/dev/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+                    <a href="https://github.com/woninet/woninet/blob/dev/LICENSE" target="_blank" rel="noopener">MIT License</a>
+                </div>
+            </div>
+            <div class="footer__bottom">&copy; 2026 Woninet. Released under the MIT License. |
+                Template inspired by <a href="https://github.com/deDavil/modern-landing-template" target="_blank" rel="noopener" style="display: inline; text-decoration: underline;">Davis Benefelds</a>.
+            </div>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>
